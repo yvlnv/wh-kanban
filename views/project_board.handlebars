@@ -1,0 +1,39 @@
+<head>
+    <script src="https://unpkg.com/apprun/dist/apprun-html.js"></script>
+</head>
+<main>
+    <section>
+        <section class="ProjectHeader" style="padding-top: 60px;">
+            <div class="ProjectName">
+                <h3>Project Name:</h3>
+                <h1>{{project.name}}</h1>
+            </div>
+            <div class="ProjectPeople">
+                <h3>People on the project:</h3>
+                <div class="iconalignment">
+                {{#each users}}
+                <div class="icon" style="background-image: url({{this.image}});"></div>
+                {{/each}}
+                <a href="/project_board/{{project.id}}/add_collaborator"><button class="plus-button">+</button></a>
+                </div>
+            </div>
+        </section>
+        {{!-- <section>
+            <h1 style="margin-left: 2rem;">Project Tasks</h1>
+            <a href="/project_board/{{project.id}}/add_task"><button>Add Task</button></a>
+            {{#each tasks}}
+            <h3>{{this.name}}</h3>
+            <form action="/project_board/{{../project.id}}/edit_task/{{this.id}}" method="GET">
+                <button>✏️</button>
+            </form>
+            <form action="/project_board/{{../project.id}}/delete_task/{{this.id}}" method="POST">
+                <button>❌</button>
+            </form>
+            {{/each}}
+        </section> --}}
+    </section>
+    <section>
+        <main id="todoApp"></main>
+        <script src="/project_board.js"></script>
+    </section>
+</main>

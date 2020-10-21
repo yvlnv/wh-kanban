@@ -1,0 +1,49 @@
+<head>
+    <style>
+        .all_project_boards {
+         padding: 20px;
+         text-align: center;
+         background-color: rgb(255, 255, 255);
+         background-image: linear-gradient(#20a7ad,#95d3db, white);
+         color: black;
+         font-size: 30px;
+         position: fixed;
+         top: 6.5%;
+         left: -4%;
+         width: 100%;
+        }
+    .ProjectsList {
+      border-radius: 5px;
+      background-color: #95d3db;
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    
+    }
+    .ProjectCard{
+        background-color: white;
+        border-top-color: #007197;
+    }
+
+
+    </style>
+</head>
+<main>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    <div class="all_project_boards"><h1>All Project Boards</h1></div>
+    <section class="ProjectList" style="padding-top: 10%;">
+  
+    <section class="ProjectsList">
+        {{#each projects}}
+        <a href="/project_board/{{this.id}}">
+        <h2 class="ProjectCard">{{this.name}}</h2>
+        {{/each}}
+    </section>
+
+    
+</main>

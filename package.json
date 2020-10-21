@@ -1,0 +1,35 @@
+{
+  "name": "kanban",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "watch": "NODE_ENV=dev PORT=3001 nodemon server.js",
+    "test": "PORT=3011 jest --watchAll"
+  },
+  "engines": {
+    "node": "14",
+    "npm": "6"
+  },
+  "author": "leighrchristie",
+  "license": "ISC",
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "handlebars": "^4.7.6",
+    "nodemon": "^2.0.5",
+    "pg": "^8.4.1",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yvlnv/wh-kanban_board_group_project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yvlnv/wh-kanban_board_group_project/issues"
+  },
+  "homepage": "https://github.com/yvlnv/wh-kanban_board_group_project#readme",
+  "description": ""
+}

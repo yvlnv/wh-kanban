@@ -1,0 +1,70 @@
+
+<head>
+    <style>
+        label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+    .add_task {
+       padding: 20px;
+       text-align: center;
+       background-color: rgb(255, 255, 255);
+       background-image: linear-gradient(#e6b2b2,rgb(247, 246, 187),rgb(247, 246, 187),rgb(214, 247, 187),rgb(214, 247, 187), white);
+       color: black;
+       font-size: 30px;
+       position: fixed;
+       top: 6.5%;
+       left: -4%;
+       width: 100%;
+}
+   .project_board{
+       border-radius: 5px;
+       background-color: rgb(214, 247, 187);
+       padding: 20px;
+       text-align: center;
+
+  box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
+    0 1px 1px rgba(128, 128, 128, 0.155),
+    0 2.1px 2.1px rgba(128, 128, 128, 0.195),
+    0 4.4px 4.4px rgba(128, 128, 128, 0.241),
+    0 12px 12px rgba(128, 128, 128, 0.35);
+}
+.cancel{
+   border-radius: 5px;
+   background-color: rgb(247, 246, 187);
+   padding: 20px;
+   text-align: center;
+
+  box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
+    0 1px 1px rgba(128, 128, 128, 0.155),
+    0 2.1px 2.1px rgba(128, 128, 128, 0.195),
+    0 4.4px 4.4px rgba(128, 128, 128, 0.241),
+    0 12px 12px rgba(128, 128, 128, 0.35);
+}
+
+    </style>
+</head>
+
+
+<body>
+    <main>
+    <div>
+        <h1>Add Task to {{project.name}}</h1>
+    </div>
+    <form class="project_board" action='/project_board/{{project.id}}/add_task' method="POST">
+        <label>Task Name/Description</label>
+        <input name="name" type="text" placeholder="description" maxlength="200" minlength="3" required/>
+        <input name="ProjectId" type="hidden" value="{{project.id}}" />
+        <label for="assignee">Assignee</label>
+        <select name="assignee" id="assignee">
+            <option value="unassigned">unassigned</option>
+            {{#each users}}
+            <option value="{{this.id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <button>Add task</button>
+        <a href="/project_board/{{project.id}}"><button>Cancel</button></a>
+    </form>
+</main>
+</body>
