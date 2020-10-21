@@ -44,7 +44,6 @@
       font-size: 30px;
       position: fixed;
       top: 4.5%;
-      left: -4%;
       width: 100%;
     }
 
@@ -55,20 +54,21 @@
 <body>
     <main>
         <div class="addCollab">
-            <h1 style="padding-top: 80px;">Add Collaborator to {{project.name}}</h1>
+            <h1 style="padding-top: 40px;">Add Collaborator to {{project.name}}</h1>
         </div>
         <main>
             <form class="projectb" action="/project_board/{{project.id}}/add_collaborator" method="POST">
                 <label for="collaborators">Choose collaborators:</label>
-                <select name="collaborators" id="collaborators" multiple>
+                <select name="collaborators" id="collaborators" multiple class='select_collaborator'>
                     {{#each users}}
                     <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
                 </select>
                 <br>
-                <input type="submit" value="Submit">
+                <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
+                <br>
+                <input type="submit" value="Submit" class='button'>
+                <a href="/project_board/{{project.id}}" class="button">Cancel</a>
             </form>
-            <p>Hold down the Ctrl (windows) or Command (Mac) button to select multiple options.</p>
-            <a href="/project_board/{{project.id}}"><button>Cancel</button></a>
         </main>
 </body>

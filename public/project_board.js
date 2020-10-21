@@ -5,15 +5,13 @@ function getProjectId () {
 }
 
 const state = {
-    todo: [],
-    doing: [],
-    done: []
+    tasks: []
 }
 
 // instead of => { return our_html }
 const view = (state) => `
     <section class="ProjectColumnGrid">
-            <section class="todosection ProjectColumns">
+            <section class="todosection ProjectColumns"  ondragover="event.preventDefault()" ondrop="app.run('addToToDo', event)">
                 <h3>To-do</h3>
                 <div class="task">
                 <form onsubmit="app.run('add', this);return false;" style="text-align: center">
@@ -23,7 +21,7 @@ const view = (state) => `
                 </div>
                 <div>
                     <ul>
-                    ${state.todo.map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromToDoTask', event)">${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 0).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
                     </ul>
                 </div>
             </section>
@@ -31,14 +29,14 @@ const view = (state) => `
             <section class="doingsection ProjectColumns" ondragover="event.preventDefault()" ondrop="app.run('addToDoingTask', event)">
                 <h3>Doing</h3>
                     <ul>
-                    ${state.doing.map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromDoingTask', event)">${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 1).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
                     </ul>
             </section>
 
             <section class="donesection ProjectColumns" ondragover="event.preventDefault()" ondrop="app.run('addToDoneTask', event)">
                 <h3>Done</h3>
                 <ul>
-                    ${state.done.map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromDoneTask', event)">${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 2).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
                 </ul>
             </section>
     </section>
@@ -68,45 +66,77 @@ const update = {
             return state
         }
     },
-    dragFromToDoTask: (state, event) => {
+    editTask: (state, event) => {
+        const id = event.dataTransfer.getData('text')
+        const task = state.tasks.find(task => task.id == id)
+        const postRequest = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        }
+        fetch('/tasks/editTask', postRequest).then(res => res.json())
+        return state
+    },
+    dragFromTask: (state, event) => {
         event.dataTransfer.setData('text', event.target.id)
+        return state
+    },
+    addToToDo: (state, event) => {
+        const id = event.dataTransfer.getData('text')
+        const task = state.tasks.find(task => task.id == id)
+        const postRequest = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        }
+        fetch('/addToToDo', postRequest).then(() => app.run('getTasks'))
         return state
     },
     addToDoingTask: (state, event) => {
         const id = event.dataTransfer.getData('text')
-        const index = state.todo.findIndex(task => task.id == id)
-        const task = state.todo.find(task => task.id == id)
-        state.todo.splice(index, 1)
-        state.doing.push(task)
-        return state
-    },
-    dragFromDoingTask: (state, event) => {
-        event.dataTransfer.setData('text', event.target.id)
+        const task = state.tasks.find(task => task.id == id)
+        const postRequest = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        }
+        fetch('/addToDoing', postRequest).then(() => app.run('getTasks'))
         return state
     },
     addToDoneTask: (state, event) => {
         const id = event.dataTransfer.getData('text')
-        const index = state.doing.findIndex(task => task.id == id)
-        const task = state.doing.find(task => task.id == id)
-        state.doing.splice(index, 1)
-        state.done.push(task)
-        return state
-    },
-    dragFromDoneTask: (state, event) => {
-        event.dataTransfer.setData('text', event.target.id)
+        const task = state.tasks.find(task => task.id == id)
+        const postRequest = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
+        }
+        fetch('/addToDone', postRequest).then(() => app.run('getTasks'))
         return state
     },
     deleteTask: (state, event) => {
         const id = event.dataTransfer.getData('text')
-        const index = state.done.findIndex(task => task.id == id)
-        if (index != -1) {
-            state.done.splice(index, 1)
-            return state
+        const task = state.tasks.find(task => task.id == id)
+        const postRequest = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(task)
         }
+        fetch('/deleteTask', postRequest).then(() => app.run('getTasks'))
+        return state
     },
     getTasks: async (state) => {
-        // either add more arrays or replace with 'state.tasks' for doing and done persistence
-        state.todo = await fetch('/tasks/' + getProjectId()).then(res => res.json())
+        state.tasks = await fetch('/tasks/' + getProjectId()).then(res => res.json())
         return state
     },
 }

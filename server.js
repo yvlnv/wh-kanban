@@ -109,6 +109,30 @@ app.post('/tasks', async (req,res) => {
     res.send()
 })
 
+app.post('/addToToDo', async (req, res) => {
+    const task = await Task.findByPk(req.body.id)
+    task.set('status', 0).save()
+    res.send()
+})
+
+app.post('/addToDoing', async (req, res) => {
+    const task = await Task.findByPk(req.body.id)
+    task.set('status', 1).save()
+    res.send()
+})
+
+app.post('/addToDone', async (req, res) => {
+    const task = await Task.findByPk(req.body.id)
+    task.set('status', 2).save()
+    res.send()
+})
+
+app.post('/deleteTask', async (req, res) => {
+    const task = await Task.findByPk(req.body.id)
+    task.destroy()
+    res.send()
+})
+
 // SERVER LOCATION
 app.listen(process.env.PORT, () => {
     sequelize.sync(() => {

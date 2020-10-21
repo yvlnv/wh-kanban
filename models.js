@@ -28,7 +28,7 @@ Project.init({
 class Task extends Model {}
 Task.init({
     name: DataTypes.STRING,
-    state: {
+    status: {
         type: DataTypes.INTEGER, 
         defaultValue: 0}
 }, {sequelize})
