@@ -66,19 +66,6 @@ const update = {
             return state
         }
     },
-    editTask: (state, event) => {
-        const id = event.dataTransfer.getData('text')
-        const task = state.tasks.find(task => task.id == id)
-        const postRequest = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(task)
-        }
-        fetch('/tasks/editTask', postRequest).then(res => res.json())
-        return state
-    },
     dragFromTask: (state, event) => {
         event.dataTransfer.setData('text', event.target.id)
         return state
