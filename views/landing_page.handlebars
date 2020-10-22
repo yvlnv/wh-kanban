@@ -1,97 +1,29 @@
-<head>
-  <style>
-    label {
-      padding: 12px 12px 12px 0;
-      display: inline-block;
-    }
-
-    .add_user {
-      border-radius: 5px;
-      background-color: #20a7ad;
-      padding: 20px;
-      text-align: center;
-
-
-      box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
-        0 1px 1px rgba(128, 128, 128, 0.155),
-        0 2.1px 2.1px rgba(128, 128, 128, 0.195),
-        0 4.4px 4.4px rgba(128, 128, 128, 0.241),
-        0 12px 12px rgba(128, 128, 128, 0.35);
-    }
-
-    .new_project_board {
-      border-radius: 5px;
-      background-color: #20a7ad;
-      padding: 20px;
-      text-align: center;
-
-      box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
-        0 1px 1px rgba(128, 128, 128, 0.155),
-        0 2.1px 2.1px rgba(128, 128, 128, 0.195),
-        0 4.4px 4.4px rgba(128, 128, 128, 0.241),
-        0 12px 12px rgba(128, 128, 128, 0.35);
-    }
-
-    .project_button {
-      border-radius: 5px;
-      background-color:#20a7ad;
-      padding: 20px;
-      text-align: center;
-
-      box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
-        0 1px 1px rgba(128, 128, 128, 0.155),
-        0 2.1px 2.1px rgba(128, 128, 128, 0.195),
-        0 4.4px 4.4px rgba(128, 128, 128, 0.241),
-        0 12px 12px rgba(128, 128, 128, 0.35);
-    }
-    }
-  </style>
-</head>
-
 <body class="lp-body">
   <div class="PageTitle">
-    <h1>Welcome to Leyamo Kanban</h1>
+    <h1>Blue Dreams Kanban</h1>
   </div>
-  <main>
+  <main style="display:flex;justify-content:center;align-items: center;margin-top:200px">
     <article>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-
-      <form class="add_user" action="/add_user" method="POST">
+      <form class="standard_card" action="/add_user" method="POST">
         <label>Create a new user</label>
-        <input name="name" type="text" placeholder="User's name" required />
+        <input name="name" type="text" placeholder="User's name" class="LPInput" required />
         <br>
         <label>Image URL</label>
-        <input name="image" type="url" placeholder="Image URL" required />
+        <input name="image" type="url" placeholder="Image URL" class="LPInput" required />
         <br>
         <button>Submit</button>
         <br>
       </form>
-
       <br>
-
-      <form class="new_project_board" action="/new_project_board" method="POST">
-
-
-        <form class="new_project_board" action="/new_project_board" method="POST">
-
+      <form class="standard_card" action="/new_project_board" method="POST">
           <label>Create a new project board</label>
-          <input name="name" type="text" placeholder="Project board's name" required />
+          <input name="name" type="text" placeholder="Project board's name" class="LPInput" required />
           <br>
           <button>Submit</button>
           <br>
         </form>
         <br>
-
-        <form class="project_button">
+        <form class="standard_card">
           <label>Already have a Project Board?</label>
           <br>
           <button><a href="/view_all_projects">View All</a></button>
@@ -101,4 +33,3 @@
         </article>
   </main>
 </body>
-

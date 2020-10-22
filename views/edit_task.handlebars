@@ -1,57 +1,20 @@
-<head>
-    <style>
-
-       .edit_task {
-      padding: 20px;
-      text-align: center;
-      background-color: rgb(255, 255, 255);
-      background-image: linear-gradient(#20a7ad,#95d3db, white);
-      color: black;
-      font-size: 30px;
-      position: fixed;
-      top: 6.5%;
-      width: 100%;
-    }
-       .task_name{
-     border-radius: 5px;
-     background-color: #20a7ad;
-     padding: 20px;
-     text-align: center;
-
-      box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109),
-     0 1px 1px rgba(128, 128, 128, 0.155),
-     0 2.1px 2.1px rgba(128, 128, 128, 0.195),
-     0 4.4px 4.4px rgba(128, 128, 128, 0.241),
-     0 12px 12px rgba(128, 128, 128, 0.35);
-    }
-      label {
-        padding: 12px 12px 12px 0;
-        display: inline-block;
-    }
-
-    </style>
-</head>
-
-
-<body>
-    <main>
-    <div>
-        <h1 style="padding-top: 100px;">Edit Task in {{project.name}}</h1>
-    </div>
-    <form class="task_name" action="/project_board/{{project.id}}/edit_task/{{task.id}}" method="POST">
-        <label>New name</label>
-        <input name="name" type="text" value="{{task.name}}" required/>
-        <br>
-        <label for="assignee">New assignee</label>
-        <select name="assignee" id="assignee">
-            {{!-- <option value="{{task.assignee}}">{{task.assignee}}</option> --}}
-            <option value="unassigned">unassigned</option>
-            {{#each users}}
-            <option value="{{this.id}}">{{this.name}}</option>
-            {{/each}}
-        </select>
-        <br>
-        <button>Edit task</button>
-        <a href="/project_board/{{project.id}}"><button>Cancel</button></a>
-    </form>
-</body>
+<div class="PageTitle">
+    <h1>Edit Task in {{project.name}}</h1>
+</div>
+<main style="margin-top:200px;display:flex;justify-content:center;align-items:center;">
+<form class="standard_card" style="width:600px;margin-left:auto;margin-right:auto;" action="/project_board/{{project.id}}/edit_task/{{task.id}}" method="POST">
+    <label>New name</label>
+    <input name="name" type="text" value="{{task.name}}" class="EditTaskInput" required/>
+    <br>
+    <label for="assignee">New assignee</label>
+    <select name="UserId" id="assignee">
+        <option value='null'>unassigned</option>
+        {{#each users}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    <button>Edit task</button>
+    <a href="/project_board/{{project.id}}"><button>Cancel</button></a>
+</form>
+</main>

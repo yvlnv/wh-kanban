@@ -30,19 +30,11 @@ app.get('/view_all_projects', async (req, res) => {
 
 app.get('/project_board/:id', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
+    // console.log(req.params)
+    // console.log("=====")
+    // console.log("=====")
     const users = await project.getUsers()
-    const tasks = await Task.findAll({
-        where: {
-            ProjectId : req.params.id
-        }
-    })
-    res.render('project_board', {project, users, tasks})
-})
-
-app.get('/project_board/:id/add_task', async (req, res) => {
-    const project = await Project.findByPk(req.params.id)
-    users = await project.getUsers()
-    res.render('add_task', {project, users})
+    res.render('project_board', {project, users})
 })
 
 app.get('/project_board/:id/edit_task/:tasks_id', async (req, res) => {
@@ -58,12 +50,27 @@ app.get('/project_board/:id/add_collaborator', async (req, res) => {
     res.render('add_collaborator', {users, project})
 })
 
+app.get('/project_board/:id/delete', async (req, res) => {
+    const project = await Project.findByPk(req.params.id)
+    project.destroy()
+    res.render('landing_page')
+})
+
 app.get('/tasks/:id', async (req, res) => {
     const tasks = await Task.findAll({
         where: {
             ProjectId : req.params.id
         }
     })
+    for (task of tasks) {
+        if (task.UserId) {
+            const user = await User.findByPk(task.UserId)
+            task.dataValues.image = user.image
+            task.dataValues.user_name = user.name
+        } else {
+            task.dataValues.user_name = 'unassigned'
+        }
+    }
     res.send(tasks)
 })
 
@@ -77,15 +84,25 @@ app.post('/new_project_board', async (req, res) => {
     const project = await Project.create(req.body)
     res.redirect(`/project_board/${project.id}`)
 })
-
-app.post('/project_board/:id/add_task', async (req, res) => {
-    await Task.create(req.body)
-    res.redirect(`/project_board/${req.params.id}`)
-})
 		
 app.post('/project_board/:id/add_collaborator', async (req, res) => {	
-    const project = await Project.findByPk(req.params.id)	
-    // This should be done without for to speed it up	
+    const project = await Project.findByPk(req.params.id)
+    const tasks = await project.getTasks()
+    const current_users = await project.getUsers()
+    for (user of current_users) {
+        project.removeUser(user)
+    }
+    for (task of tasks) {
+        var old_user = false
+        for (user_id of req.body.collaborators) {
+            if (task.UserId == user_id) {
+                old_user = true
+            }
+        }
+        if (!old_user) {
+            task.set('UserId', null).save()
+        }
+    }
     for (user_id of req.body.collaborators) {
         await project.addUsers(Number(user_id))	
     }	
@@ -95,6 +112,9 @@ app.post('/project_board/:id/add_collaborator', async (req, res) => {
 app.post('/project_board/:id/edit_task/:tasks_id', async (req, res) => {
     const task = await Task.findByPk(req.params.tasks_id)
     task.update(req.body)
+    if (req.body.UserId == 'null') {
+        task.set('UserId', null).save()
+    }
     res.redirect(`/project_board/${req.params.id}`)
 })
 
@@ -131,6 +151,11 @@ app.post('/deleteTask', async (req, res) => {
     const task = await Task.findByPk(req.body.id)
     task.destroy()
     res.send()
+})
+
+app.post('/getUserImage', async (req, res) => {
+    const user = await User.findByPk(req.body.UserId)
+    res.send(user.image)
 })
 
 // SERVER LOCATION

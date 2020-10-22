@@ -5,7 +5,20 @@ function getProjectId () {
 }
 
 const state = {
-    tasks: []
+    tasks: [],
+    users: []
+}
+
+function assigneeIcon(task) {
+    if (task.UserId == null) {
+        return "../images/ghost.webp"
+    } else {
+        return task.image
+    }
+}
+
+function printTask(task, cssClass) {
+    return `<li class="${cssClass}" id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><div style="float:left;margin-top:8px;">${task.name}</div><a style="float:right;" href="/project_board/${getProjectId()}/edit_task/${task.id}"><button class="EditTaskButton">✏️</button></a><div class='AssigneeIcon tooltip' style="float:right;background-image:url(${assigneeIcon(task)})"><span class="tooltiptext">${task.user_name}</span></div> <div style='clear:both;'</div></li>`;
 }
 
 // instead of => { return our_html }
@@ -13,30 +26,30 @@ const view = (state) => `
     <section class="ProjectColumnGrid">
             <section class="todosection ProjectColumns"  ondragover="event.preventDefault()" ondrop="app.run('addToToDo', event)">
                 <h3>To-do</h3>
-                <div class="task">
-                <form onsubmit="app.run('add', this);return false;" style="text-align: center">
-                    <input name="task" placeholder="add a task" />
-                    <button class="plus-button">+</button>
-                </form>
-                </div>
                 <div>
                     <ul>
-                    ${state.tasks.filter(task => task.status == 0).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 0).map(task => printTask(task, 'ToDoLI')).join("")}
                     </ul>
+                </div>
+                <div class="task">
+                    <form onsubmit="app.run('add', this);return false;" style="text-align:center;width:100%;">
+                        <input name="task" placeholder="add a task" class="InputTask"/>
+                        <button class="plus-button">+</button>
+                    </form>
                 </div>
             </section>
 
             <section class="doingsection ProjectColumns" ondragover="event.preventDefault()" ondrop="app.run('addToDoingTask', event)">
                 <h3>Doing</h3>
                     <ul>
-                    ${state.tasks.filter(task => task.status == 1).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 1).map(task => printTask(task, 'DoingLI')).join("")}
                     </ul>
             </section>
 
             <section class="donesection ProjectColumns" ondragover="event.preventDefault()" ondrop="app.run('addToDoneTask', event)">
                 <h3>Done</h3>
                 <ul>
-                    ${state.tasks.filter(task => task.status == 2).map(task => `<li id="${task.id}" draggable="true" ondragstart="app.run('dragFromTask', event)"><a href="/project_board/${getProjectId()}/edit_task/${task.id}" class="button">✏️</a> ${task.name}</li>`).join("")}
+                    ${state.tasks.filter(task => task.status == 2).map(task => printTask(task, 'DoneLI')).join("")}
                 </ul>
             </section>
     </section>

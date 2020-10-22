@@ -1,37 +1,10 @@
-<head>
-    <style>
-    .ProjectsList {
-      border-radius: 5px;
-      background-color: #95d3db;
-      width: 100%;
-      padding: 20px;
-      text-align: center;
-    
-    }
-    .ProjectCard{
-        background-color: white;
-        border-top-color: #007197;
-    }
-
-
-    </style>
-</head>
-<main>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <div class="PageTitle"><h1>All Project Boards</h1></div>
-    <section class="ProjectList" style="padding-top: 10%;">
-  
+<div class="PageTitle"><h1>All Project Boards</h1></div>
+<main style="max-width:1200px;margin:auto;">
+    <section class="ProjectList" style="padding-top: 3rem;">
     <section class="ProjectsList">
         {{#each projects}}
         <a href="/project_board/{{this.id}}">
         <h2 class="ProjectCard">{{this.name}}</h2>
         {{/each}}
-    </section>
-
-    
+    </section></section>
 </main>
