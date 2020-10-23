@@ -1,0 +1,12 @@
+<div class="PageTitle">
+    <h1>Rename '{{project.name}}' Project Board</h1>
+</div>
+<main style="margin-top:200px;display:flex;justify-content:center;align-items:center;">
+<form class="standard_card" style="width:600px;margin-left:auto;margin-right:auto;" action="/project_board/{{project.id}}/rename" method="POST">
+    <label>New name</label>
+    <input name="name" type="text" value="{{project.name}}" class="EditTaskInput" required/>
+    <br>
+    <input type="submit" value="Rename" class='button'>
+    <a href="/project_board/{{project.id}}"class="button">Cancel</a>
+</form>
+</main>

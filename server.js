@@ -34,6 +34,11 @@ app.get('/project_board/:id', async (req, res) => {
     res.render('project_board', {project, users})
 })
 
+app.get('/project_board/:id/rename', async (req, res) => {
+    const project = await Project.findByPk(req.params.id)
+    res.render('rename', {project})
+})
+
 app.get('/project_board/:id/edit_task/:tasks_id', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     const task = await Task.findByPk(req.params.tasks_id)
@@ -118,6 +123,12 @@ app.post('/project_board/:id/edit_task/:tasks_id', async (req, res) => {
 app.post('/project_board/:id/delete_task/:tasks_id', async (req, res) => {
     const task = await Task.findByPk(req.params.tasks_id)
     task.destroy()
+    res.redirect(`/project_board/${req.params.id}`)
+})
+
+app.post('/project_board/:id/rename', async (req, res) => {
+    const project = await Project.findByPk(req.params.id)
+    project.update(req.body)
     res.redirect(`/project_board/${req.params.id}`)
 })
 
