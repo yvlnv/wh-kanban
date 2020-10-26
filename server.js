@@ -55,7 +55,7 @@ app.get('/project_board/:id/add_collaborator', async (req, res) => {
 app.get('/project_board/:id/delete', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     project.destroy()
-    res.render('landing_page')
+    res.redirect('/')
 })
 
 app.get('/tasks/:id', async (req, res) => {
