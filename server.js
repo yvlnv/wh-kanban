@@ -51,6 +51,11 @@ app.get('/project_board/:id/edit_task/:tasks_id', async (req, res) => {
     res.render('edit_task', {project, task, users})
 })
 
+app.get('/users/:id/edit', async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    res.render('edit_user', {user})
+})
+
 app.get('/project_board/:id/add_collaborator', async (req, res) => {
     const users = await User.findAll()
     const project = await Project.findByPk(req.params.id)
@@ -141,6 +146,12 @@ app.post('/project_board/:id/rename', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     project.update(req.body)
     res.redirect(`/project_board/${req.params.id}`)
+})
+
+app.post('/users/:id/edit', async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    user.update(req.body)
+    res.redirect('/users')
 })
 
 app.post('/tasks', async (req,res) => {

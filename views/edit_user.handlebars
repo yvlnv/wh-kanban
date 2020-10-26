@@ -1,0 +1,15 @@
+<div class="PageTitle">
+    <h1>Edit User: {{user.name}}</h1>
+</div>
+<main style="margin-top:200px;display:flex;justify-content:center;align-items:center;">
+<form class="standard_card" style="width:600px;margin-left:auto;margin-right:auto;" action="/users/{{user.id}}/edit" method="POST">
+    <label>New name</label>
+    <input name="name" type="text" value="{{user.name}}" class="EditTaskInput" required/>
+    <br>
+    <label>New image</label>
+    <input name="image" type="url" value="{{user.image}}" class="EditTaskInput" required/>
+    <br>
+    <input type="submit" value="Edit user" class="button">
+    <a href="/users" class="button">Cancel</a>
+</form>
+</main>
