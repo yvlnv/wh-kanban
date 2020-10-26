@@ -195,6 +195,25 @@ button:hover, .button:hover {
     border: 1px black solid;
 }
 
+
+.UserCard {
+    height: 200px;
+    border-radius: 4px;
+    background-size: cover;
+    border: 1px black solid;
+    margin-bottom: 5px;
+}
+
+.UserIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    padding: 4px;
+    font-size: 150%;
+    background-color: rgb(239, 240, 240, 0.9);
+}
+
 .AssigneeIcon {
     width: 48px;
     height: 48px;

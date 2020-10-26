@@ -1,0 +1,14 @@
+<div class="PageTitle"><h1>All Users</h1></div>
+<main style="max-width:1200px;margin:auto;">
+    <section class="ProjectList" style="padding-top: 3rem;">
+    <section class="ProjectsList">
+        {{#each users}}
+        <div style="clear:both;display:block;margin:auto;">
+            <div class="UserCard" style="background-image: url({{this.image}});">
+                <section class="UserIcon">{{this.name}}</section>
+            </div>
+            <a href="/users/{{this.id}}/edit"><button style="width:100px;">Edit</button></a> <a href="/users/{{this.id}}/delete" onclick="return confirm('Are you sure you want to delete the user?')";><button style="width:100px;">Delete</button></a>
+        </div>
+        {{/each}}
+    </section></section>
+</main>

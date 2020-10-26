@@ -28,6 +28,11 @@ app.get('/view_all_projects', async (req, res) => {
     res.render('all_project_boards', {projects})
 })
 
+app.get('/users', async (req, res) => {
+    const users = await User.findAll()
+    res.render('all_users', {users})
+})
+
 app.get('/project_board/:id', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     const users = await project.getUsers()
@@ -56,6 +61,12 @@ app.get('/project_board/:id/delete', async (req, res) => {
     const project = await Project.findByPk(req.params.id)
     project.destroy()
     res.redirect('/')
+})
+
+app.get('/users/:id/delete', async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    user.destroy()
+    res.redirect('/users')
 })
 
 app.get('/tasks/:id', async (req, res) => {
